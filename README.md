@@ -16,8 +16,8 @@ For the feasibility test the following model will be used:
 
 The images folder in this repository contains the original proposal, as well as Esra's initial mathematical outline of steps to set up in the the processing pipeline.
 
-## Pipeline
-We desire a python processing pipeline which runs from acoustic simulation through to TI simulation. Esra Neufeld has provided a mathematical outline with processing steps involved, which we are now trying to code in Sim4Life/Python. 
+## Goal
+We desire a python processing pipeline which runs from acoustic simulation through to TI simulation. 
 
 ## Specifications: 
 ### Step 1: Acoustic Simulation
