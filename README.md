@@ -25,7 +25,11 @@ Currently, I've got the SEFT tutorial at transducer frequency of 55kHz, with a s
 
 Example Unipolar waveform = 0.5*(sin(2\*pi\*fs\*t)+|sin(2\*pi\*fs\*t) | )
 
-#### 
+The python script - unipolar_model.py can generate a unipolar waveform and plot it. I was using this to then plug into the equation area in sim4life. When I do this, it causes problems however. 
+
+Question: When I try to plot the results of pressure or intensity vs time, I can only get a single time point or one dot on the graph. Why is this? How do I plot the pressure over time?
+
+#### Step 2: 
 
 
 
