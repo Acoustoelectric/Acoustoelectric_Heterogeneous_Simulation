@@ -2,6 +2,8 @@
 
 This repository will contain the smash files from SIM4Life and python code to create a simulation of Acoustoelectric Temporal Interference. 
 
+The basic concept is to utilize the acoustoelectric effect, whereby an acoustic wave causes a localized change in conductivity in a medium to create an oscillating electric field, which can then be used in TI stimulation. The advantage of this is the smaller focal point of the acoustic transducer, enabling a more localized stimulation location to be found. 
+
 ## Intall environment
 
 Jean is running a Windows 10 machine(through VMWare) with Sim4LifeLight 5.2.1.1375 installed. She also has access to the full version on the lab server if need be, but it's easier to develop a basic simulation locally on her computer so she's working on that first. Once the model becomes more complex, we expect to move to full version. Hence keeping the cell count under the limit is useful currently, if only to speed up development time. 
