@@ -21,7 +21,7 @@ We desire a python processing pipeline which runs from acoustic simulation throu
 
 ## Specifications: 
 ### Step 1: Acoustic Simulation
-Currently, I've got the SEFT tutorial at transducer frequency of 55kHz, with a sinusoidal pulse. Is it possible to run through a unipolar pulse instead? So it's a 55kHz transducer modulating at 2kHz with a unipolar pulse? This would be a common set up for tumor ablation-though we are using it for a different purpose. 
+Currently, I've got the SEFT tutorial at transducer frequency of 55kHz, with a sinusoidal pulse. Is it possible to run through a unipolar pulse instead? So it's a 55kHz transducer modulating at 2kHz with a unipolar pulse? This would be a common set up for tumor ablation-though we are using it for a different purpose. We would expect this to have a frequency response at the 55kHz frequency, the 2kHz frequency, and the mixing frequencies(though we could ignore the mixing for now if it is too complex). 
 
 Example Unipolar waveform = 0.5*(sin(2\*pi\*fs\*t)+|sin(2\*pi\*fs\*t) | )
 
