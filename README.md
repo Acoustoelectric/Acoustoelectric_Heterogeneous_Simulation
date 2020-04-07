@@ -6,7 +6,7 @@ The basic concept is to utilize the acoustoelectric effect, whereby an acoustic 
 
 ## Intall environment
 
-Jean is running a Windows 10 machine(through VMWare) with Sim4LifeLight 5.2.1.1375 installed. She also has access to the full version on the lab server if need be, but it's easier to develop a basic simulation locally on her computer so she's working on that first. Once the model becomes more complex, we expect to move to full version. Hence keeping the cell count under the limit is useful currently, if only to speed up development time. 
+Jean is running a Windows 10 machine(through VMWare) with Sim4LifeLight 5.2.1.1375 installed. The lab server based full version is available later, when more complex models are used. 
 
 ## Model Description
 For the feasibility test the following model will be used: 
