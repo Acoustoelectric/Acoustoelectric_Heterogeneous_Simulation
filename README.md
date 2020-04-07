@@ -6,7 +6,7 @@ The basic concept is to utilize the acoustoelectric effect, whereby an acoustic 
 
 ## Intall environment
 
-Jean is running a Windows 10 machine(through VMWare) with Sim4LifeLight 5.2.1.1375 installed. The lab server based full version is available later, when more complex models are used. 
+Jean is running a Windows 10 machine(through VMWare) with Sim4LifeLight 5.2.1.1375 installed. The lab server based full version is available later when more complex models are used. 
 
 ## Model Description
 For the feasibility test the following model will be used: 
