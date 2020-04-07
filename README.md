@@ -23,7 +23,7 @@ We desire a python processing pipeline which runs from acoustic simulation throu
 ### Step 1: Acoustic Simulation
 Unipolar Waveform, 1Mhz transducer with a unipolar(initially half a sine wave) pulse which is pulsed through at a 2kHz frequency. 
 
-Unipolar waveform = 0.5*(sin(2*pi*fs*)+|sin(2*pi*fs*t) | )
+Unipolar waveform = 0.5*(sin(2\*pi\*fs\*t)+|sin(2\*pi\*fs\*t) | )
 
 #### 
 
