@@ -37,13 +37,3 @@ Question: When I try to plot the results of pressure or intensity vs time, I can
 ### Step 3: Compute the source term S(x)
 
 ### Step 4: Solve the diffusion equation 
-
-
-
-
-
-
-
-
-
-
