@@ -34,7 +34,7 @@ Question: When I try to plot the results of pressure or intensity vs time, I can
 - How do I place Voltage sensors in the two inserted cylindrical leads? I cannot see it on any menu... todo. 
 - which part of this do i export, and how do i convert this simulation into a python script?
 
-### Step 3: Compute the source term (S(x))
+### Step 3: Compute the source term S(x)
 
 ### Step 4: Solve the diffusion equation equation
 
