@@ -30,7 +30,13 @@ The python script - unipolar_model.py can generate a unipolar waveform and plot 
 Question: When I try to plot the results of pressure or intensity vs time, I can only get a single time point or one dot on the graph. Why is this? How do I plot the pressure over time?
 
 ### Step 2: Electric Lead Field Simulation 
-- I've selected the Electrostatic simulation. Is this correct, as it's not computing over time? Since I cannot plot along a time axis anyway, perhaps this is ok? 
+- I've selected the Electrostatic simulation. Is this correct?
+- How do I place Voltage sensors in the two inserted cylindrical leads? I cannot see it on any menu... todo. 
+- which part of this do i export, and how do i convert this simulation into a python script?
+
+### Step 3: Compute the source term S(x)
+
+### Step 4: Solve the diffusion equation 
 
 
 
