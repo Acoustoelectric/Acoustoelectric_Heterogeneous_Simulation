@@ -16,24 +16,27 @@ For the feasibility test the following model will be used:
 
 The images folder in this repository contains the original proposal, as well as Esra's initial mathematical outline of steps to set up in the the processing pipeline.
 
+A good paper is: 
+X. Song, Y. Qin, Y. Xu, P. Ingram, R. S. Witte and F. Dong, "Tissue Acoustoelectric Effect Modeling From Solid Mechanics Theory," in IEEE Transactions on Ultrasonics, Ferroelectrics, and Frequency Control, vol. 64, no. 10, pp. 1583-1590, Oct. 2017.
+
 ## Goal
 We desire a python processing pipeline which runs from acoustic simulation through to TI simulation. 
 
 ## Specifications: 
 ### Step 1: Acoustic Simulation
-Currently, I've got the SEFT tutorial at transducer frequency of 55kHz, with a sinusoidal pulse. Is it possible to run through a unipolar pulse instead? So it's a 55kHz transducer modulating at 2kHz with a unipolar pulse? This would be a common set up for tumor ablation-though we are using it for a different purpose. We would expect this to have a frequency response at the 55kHz frequency, the 2kHz frequency, and the mixing frequencies(though we could ignore the mixing for now if it is too complex). 
-
-Example Unipolar waveform = 0.5*(sin(2\*pi\*fs\*t)+|sin(2\*pi\*fs\*t) | )
-
-The python script - unipolar_model.py can generate a unipolar waveform and plot it. I was using this to then plug into the equation area in sim4life. When I do this, it causes problems however. 
-
-Question: When I try to plot the results of pressure or intensity vs time, I can only get a single time point or one dot on the graph. Why is this? How do I plot the pressure over time?
+There is a very basic simualtion in place. 
 
 ### Step 2: Electric Lead Field Simulation 
-- I've selected the Electrostatic simulation. Is this correct?
-- How do I place Voltage sensors in the two inserted cylindrical leads? I cannot see it on any menu... todo. 
-- which part of this do i export, and how do i convert this simulation into a python script?
+There is a very basic simulation in place. 
 
 ### Step 3: Compute the source term S(x)
+The main question I have is about the real part of the result of step 3 which is fine for visualizing, but won't work in a transient thermal diffusion solver. Should I be calculating the source in terms of the complex field? Otherwise I would solve the diffusion equation for a static thermal solver. Currently you'd expect a sinusoidal volume, conductivity and pressure change over time. 
 
 ### Step 4: Solve the diffusion equation 
+I've created a transient thermal simulation, and tried to import the source derived in Step 3, with the plan of running that in the simulation, but it asks to change the units to [W/m^3]. I've tried setting the units in the visualization function in haazLib to  unit = '[W/m^3]' but it doesn't seem to register. It also looks like this source needs to be aligned with the thermal grid. The problem here is I cannot use the sensor extractor to get the grid info as it cannot run the simulation, so not sure how to do the interpolation if I can't get the thermal axis. 
+
+Error : Writing of heat source originating from user source file: C:\Users\jeantoul\Desktop\sim4life_tests\ATI\scripts\E_Source.cache failed with the following message: No user-defined source with units [W/m^3] found in C:\Users\jeantoul\Desktop\sim4life_tests\ATI\scripts\E_Source.cache
+Error : Error during writing of heat sources.
+Warning : Unable to write to solver's input file of 'DiffusionSolver'. File simulation data seems to have errors (see other messages). To restore the file, reset and create the discretization again. Aborting operation.
+Error : Unable to write input file. See console output for more information.
+
