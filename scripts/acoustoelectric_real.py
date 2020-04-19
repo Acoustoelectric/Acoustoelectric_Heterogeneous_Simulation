@@ -90,7 +90,7 @@ em_leadfield = em_field_3d[:,:,0:42]
 E_source= em_leadfield*np.gradient(p_scaled)[0]
 print E_source.shape
 
-E_source_producer = hz.visualizeArray(E_source, x_axis,y_axis,z_axis,unit_name="[W/m^3]",unit="[W/m^3]",name="E Source" )
+E_source_producer = hz.visualizeArray(E_source, x_axis,y_axis,z_axis,unit_name="W/m^3",unit="W/m^3",name="E R Source" )
 
 # Adding a new SliceFieldViewer
 inputs = [E_source_producer.Outputs[""]]

@@ -95,10 +95,10 @@ em_leadfield = em_field_3d[:,:,0:42]
 E_source= em_leadfield*np.gradient(p_scaled)[0]
 print E_source.shape
 
-E_source_producer = hz.visualizeArray(E_source, x_axis,y_axis,z_axis,unit_name="[W/m^3]",unit="[W/m^3]",name="E Source" )
+E_source_producer = hz.visualizeArray(E_source, x_axis,y_axis,z_axis,unit_name="W/m^3",unit="W/m^3",name="E C Source" )
 
 ### Now modify this to be: 
-E_source_inThermalgrid = hz.interpn(p_x_axis2, p_y_axis2, p_z_axis2, E_source, em_x_axis2, em_y_axis2, em_z_axis2)
+#E_source_inThermalgrid = hz.interpn(p_x_axis2, p_y_axis2, p_z_axis2, E_source, em_x_axis2, em_y_axis2, em_z_axis2)
 
 # Adding a new SliceFieldViewer
 inputs = [E_source_producer.Outputs[""]]
