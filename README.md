@@ -33,10 +33,5 @@ There is a very basic simulation in place.
 The main question I have is about the real part of the result of step 3 which is fine for visualizing, but won't work in a transient thermal diffusion solver. Should I be calculating the source in terms of the complex field? Otherwise I would solve the diffusion equation for a static thermal solver. Currently you'd expect a sinusoidal volume, conductivity and pressure change over time. 
 
 ### Step 4: Solve the diffusion equation 
-I've created a transient thermal simulation, and tried to import the source derived in Step 3, with the plan of running that in the simulation, but it asks to change the units to [W/m^3]. I've tried setting the units in the visualization function in haazLib to  unit = '[W/m^3]' but it doesn't seem to register. It also looks like this source needs to be aligned with the thermal grid. The problem here is I cannot use the sensor extractor to get the grid info as it cannot run the simulation, so not sure how to do the interpolation if I can't get the thermal axis. 
 
-Error : Writing of heat source originating from user source file: C:\Users\jeantoul\Desktop\sim4life_tests\ATI\scripts\E_Source.cache failed with the following message: No user-defined source with units [W/m^3] found in C:\Users\jeantoul\Desktop\sim4life_tests\ATI\scripts\E_Source.cache
-Error : Error during writing of heat sources.
-Warning : Unable to write to solver's input file of 'DiffusionSolver'. File simulation data seems to have errors (see other messages). To restore the file, reset and create the discretization again. Aborting operation.
-Error : Unable to write input file. See console output for more information.
 
