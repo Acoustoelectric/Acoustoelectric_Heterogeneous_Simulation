@@ -2,7 +2,7 @@
 
 This repository will contain the smash files from SIM4Life and python code to create a simulation of Acoustoelectric Temporal Interference. 
 
-The basic concept is to utilize the acoustoelectric effect, whereby an acoustic wave causes a localized change in conductivity in a medium to create an oscillating electric field, which can then be used in TI stimulation. The advantage of this is the smaller focal point of the acoustic transducer, enabling a more localized stimulation focal point. 
+The basic concept is to utilize the acoustoelectric effect, whereby an acoustic wave causes a localized change in conductivity in a medium to create an oscillating electric field, which can then be used in TI stimulation. The advantage of this is the smaller focal point of the acoustic transducer, enabling a more localized electrical stimulation. 
 
 ## Intall environment
 
