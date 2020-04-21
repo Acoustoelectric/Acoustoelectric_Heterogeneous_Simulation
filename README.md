@@ -33,5 +33,8 @@ There is a very basic simulation in place.
 The main question I have is about the real part of the result of step 3 which is fine for visualizing, but won't work in a transient thermal diffusion solver. Should I be calculating the source in terms of the complex field? Otherwise I would solve the diffusion equation for a static thermal solver. Currently you'd expect a sinusoidal volume, conductivity and pressure change over time. 
 
 ### Step 4: Solve the diffusion equation 
+<p align="center">
+	<img src="images/diffusion_solver.jpeg" height="300">
+</p>
 
 
