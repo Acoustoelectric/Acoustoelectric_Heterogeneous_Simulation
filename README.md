@@ -34,7 +34,7 @@ The main question I have is about the real part of the result of step 3 which is
 
 ### Step 4: Solve the diffusion equation 
 <p align="center">
-	<img src="images/diffusion_solver.jpeg" height="300">
+	<img src="images/diffusion_solver.JPEG" height="300">
 </p>
 
 
