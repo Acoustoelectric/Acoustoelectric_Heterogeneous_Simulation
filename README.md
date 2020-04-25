@@ -24,7 +24,7 @@ We desire a python processing pipeline which runs from acoustic simulation throu
 
 ## Specifications: 
 ### Step 1: Acoustic Simulation
-There is a very basic simualtion in place. 
+There is a very basic simulation in place. 
 
 ### Step 2: Electric Lead Field Simulation 
 There is a very basic simulation in place. 
