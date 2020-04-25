@@ -82,7 +82,7 @@ grad_p = gradient_output.Data.Field(0)
 #print grad_p.shape
 
 # They are both 236208L,3L so use matmul. 
-E_source = np.matmul(em_field_real[:,None,:], adiabatic_compressibility*grad_p[:,:,None]) [:,0]
+E_source = np.matmul(em_field[:,None,:], adiabatic_compressibility*grad_p[:,:,None]) [:,0]
 # then remove the last indice
 
 # Put E source in 3D so that we can visualize it. 
