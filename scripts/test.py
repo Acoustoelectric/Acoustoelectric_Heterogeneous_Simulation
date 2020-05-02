@@ -7,9 +7,8 @@ import haazLib_v2 as hz
 # Have a look at what dP/dV look like for the pressure field... 
 # then have a look at what E_source looks like. 
 
-
 # Variables to define. 
-adiabatic_compressibility = 0.4559 # this is the adiabatic compressibility of water at 20 degrees C. 
+adiabatic_compressibility = 0.4559e-9 # this is the adiabatic compressibility of water at 20 degrees C, GPA^-1. 
 real_only = False  # this uses only the real part of the phasor, or if False, the whole complex phasor. 
 outfile = "data.npz"
 

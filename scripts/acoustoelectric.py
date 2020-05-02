@@ -5,7 +5,7 @@ import numpy as np
 import haazLib_v2 as hz
 
 # Variables to define. 
-adiabatic_compressibility = 0.4559 # this is the adiabatic compressibility of water at 20 degrees C. 
+adiabatic_compressibility = 0.4559e-9 # this is the adiabatic compressibility of water at 20 degrees C. 
 real_only = False  # this uses only the real part of the phasor, or if False, the whole complex phasor. 
 outfile = "data.npz"
 
@@ -88,7 +88,21 @@ E_source = np.matmul(em_field[:,None,:], adiabatic_compressibility*grad_p[:,:,No
 
 # Put E source in 3D so that we can visualize it. 
 E_source_3d = E_source.reshape( grid_size[0]-1,grid_size[1]-1,grid_size[2]-1, order='F')
-E_source_producer = hz.visualizeArray(E_source_3d, em_x_axis2, em_y_axis2, em_z_axis2,unit_name="dP/dV",unit="W/m^3",name="E Source" )
+#E_source_producer = hz.visualizeArray(E_source_3d, em_x_axis2, em_y_axis2, em_z_axis2,unit_name="dP/dV",unit="W/m^3",name="E Source" )
+
+#np.savez(outfile,E_source_3d=E_source_3d,x = em_x_axis2, y = em_y_axis2, z = em_z_axis2)
+
+# k is simply the adiabatic compressibility. 
+nanless = np.nan_to_num(E_source_3d)
+#print nanless 
+#print E_source_3d  # lots of nans... 
+E_source_3d = nanless
+
+E_source_producer = hz.visualizeArray(E_source_3d, em_x_axis2, em_y_axis2, em_z_axis2,unit_name="dP/dV",unit="W/m^3",name="Diffusion Input" )
+
+E_source_viz = hz.visualizeArray(E_source_3d, em_x_axis2, em_y_axis2, em_z_axis2,unit_name="E field",unit="V/m",name="Acoustoelectric EFfect" )
+
+
 
 np.savez(outfile,E_source_3d=E_source_3d,x = em_x_axis2, y = em_y_axis2, z = em_z_axis2)
 
