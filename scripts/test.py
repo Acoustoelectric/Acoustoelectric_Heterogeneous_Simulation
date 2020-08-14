@@ -1,110 +1,154 @@
 # -*- coding: utf-8 -*-
-import s4l_v1 as s4l
-import s4l_v1.analysis as analysis
-import numpy as np
-import haazLib_v2 as hz
+import numpy as np 
+from scipy.interpolate import interp1d
+import matplotlib.pyplot as plt
+import os.path
 
-# Have a look at what dP/dV look like for the pressure field... 
-# then have a look at what E_source looks like. 
+# Read in some NPZ files. 
+#emfile = "em.npz"
+#np.savez(emfile, em_field_3d = em_field_3d, x=em_x_axis2,y=em_y_axis2,z=em_z_axis2)
+#pfile = "p.npz"
+#np.savez(pfile, p_field_3d = p_field_3d, x=p_x_axis2,y=p_y_axis2,z=p_z_axis2)
+def interpn(*args, **kw):
+	"""
+	Interpolation on N-D. 
+	ai = interpn(x, y, z, ..., a, xi, yi, zi, ...)
+	where the arrays x, y, z, ... define a rectangular grid
+	and a.shape == (len(x), len(y), len(z), ...) are the values
+	interpolate at xi, yi, zi, ...
 
-# Variables to define. 
-adiabatic_compressibility = 0.4559e-9 # this is the adiabatic compressibility of water at 20 degrees C, GPA^-1. 
-real_only = False  # this uses only the real part of the phasor, or if False, the whole complex phasor. 
-outfile = "data.npz"
-
-em_sim = s4l.document.AllSimulations['LeadFieldSimulation']
-if em_sim.HasResults():
-	simulation_extractor = em_sim.Results()
-	em_sensor_extractor = simulation_extractor["Overall Field"]
-	em_output = em_sensor_extractor.Outputs["EM E(x,y,z,f0)"]
-	em_output.Update()
-else: 
-	print 'em sim has no results'
+	https://github.com/JohannesBuchner/regulargrid/blob/master/regulargrid/interpn.py
+	"""
 	
-acoustic_sim = s4l.document.AllSimulations['Ultrasound Transducer']	
-if acoustic_sim.HasResults():	
-	simulation_extractor = acoustic_sim.Results()
-	acoustic_sensor_extractor = simulation_extractor["Overall Field"]
-	p_output = acoustic_sensor_extractor.Outputs["p(x,y,z,f)"]
-	p_output.Update()
-else: 
-	print 'p sim has no results'
+	# method = kw.pop('method', 'cubic')
+	# method = kw.pop('method', 'nearest')
+	method = kw.pop('method', 'linear')
+	# method = kw.pop('method', 'slinear')
+	if kw:
+		raise ValueError("Unknown arguments: " % kw.keys())
+	nd = (len(args)-1)//2
+	if len(args) != 2*nd+1:
+		raise ValueError("Wrong number of arguments")
+	q = args[:nd]
+	qi = args[nd+1:]
+	a = args[nd]
+	for j in range(nd):
+		# a = interp1d(q[j], a, axis=j, kind=method)(qi[j])
+		# a = interp1d(q[j], a, axis=j, kind=method, bounds_error=False, fill_value=np.nan)(qi[j])
+		a = interp1d(q[j], a, axis=j, kind=method, bounds_error=False)(qi[j])
 		
-# Get Field data
-em_field = em_output.Data.Field(0) # 0 corresponds to snapshot number (typically frequency or time)
-# Note: Field is 1D array
-# Get just the real part... 
-if real_only:
-	em_field = np.real(em_field)
-	#print em_field_real.shape
-
-# Turn to E field into 3D array
-grid_size = em_output.Data.Grid.Dimensions
-field_grid_size = (grid_size[0]-1,grid_size[1]-1, grid_size[2]-1) #print field_grid_size # 76, 74, 42
-em_field_3d = em_field.reshape( grid_size[0]-1,grid_size[1]-1,grid_size[2]-1,3,order='F')
-x_axis = em_output.Data.Grid.XAxis
-y_axis = em_output.Data.Grid.YAxis
-z_axis = em_output.Data.Grid.ZAxis
-em_x_axis2 = (x_axis[1:]+x_axis[:-1])/2.0
-em_y_axis2 = (y_axis[1:]+y_axis[:-1])/2.0
-em_z_axis2 = (z_axis[1:]+z_axis[:-1])/2.0
-# Note: Careful with Axes since S4L have Fields evaluated at cell centers
-# And Axes represent the nodes
-# So field_size != x * y * z, it's (x-1) * (y-1) * (z-1)
-
-# Get Acoustic Field data
-p_field = p_output.Data.Field(0) 
-if real_only:
-	p_field = np.real(p_field)
-# Note: Field is 1D array
-p_grid_size = p_output.Data.Grid.Dimensions
-p_field_3d = p_field.reshape( p_grid_size[0]-1,p_grid_size[1]-1,-1,order='F')
-p_x_axis = p_output.Data.Grid.XAxis
-p_y_axis = p_output.Data.Grid.YAxis
-p_z_axis = p_output.Data.Grid.ZAxis
-p_x_axis2 = (p_x_axis[1:]+p_x_axis[:-1])/2.0
-p_y_axis2 = (p_y_axis[1:]+p_y_axis[:-1])/2.0
-p_z_axis2 = (p_z_axis[1:]+p_z_axis[:-1])/2.0
+	return a
 
 
-print p_field_3d[:,:,47]  # they are all complex numbers. 
-print p_field_3d.shape
+p_filename = "p.npz"
+data = np.load(p_filename)
+#print (data.keys())
+p_field_3d 	= np.absolute(data['p_field_3d'])
+p_x 		= data['x']
+p_y 		= data['y']
+p_z 		= data['z']
 
 
-# interpolate the p_field into the grid of the e_field. p output has to be a 3d array aligned with the grid. 
-p_inEMgrid = hz.interpn(p_x_axis2, p_y_axis2, p_z_axis2, p_field_3d, em_x_axis2, em_y_axis2, em_z_axis2)
-# Make P_inemgrid  trivial producer, so that we can then pass it to the gradient calculator. 
-P_EMgrid_producer = hz.visualizeArray(p_inEMgrid, em_x_axis2, em_y_axis2, em_z_axis2,name="p_inEMgrid",unit_name="dP/dV",unit="W/m^3" )
-P_EMgrid_producer.Update()
+e_filename = "em.npz"
+data = np.load(e_filename)
+#print (data.keys())
+em_field_3d = data['em_field_3d']
+em_x = data['x']
+em_y = data['y']
+em_z = data['z']
 
-# Calculate the gradient of the pressure(in the EM grid). 
-inputs = [P_EMgrid_producer.Outputs["dP/dV"]]
-field_gradient_evaluator = analysis.core.FieldGradientEvaluator(inputs=inputs)
-field_gradient_evaluator.UpdateAttributes()
-gradient_output = field_gradient_evaluator.Outputs["grad(dP/dV)"]
-gradient_output.Update()
-grad_p = gradient_output.Data.Field(0)
+# print (p_field_3d.shape, em_field_3d.shape)
+# print (em_field_3d[:,:,:,0].shape)
 
-# Check the sizes of the matrices ready for E source calculation: 
-#print grad_p.shape
-#print em_field_real.shape
-#print grad_p.shape
+if (os.path.isfile('eminpgrid.npz')) == False:
+	# p in em grid worked, but em in p grid is a bit more tricky. 
+	# as the dimensions of em are different. 
+	em_inPgrid_x = interpn(em_x, em_y, em_z, em_field_3d[:,:,:,0], p_x, p_y, p_z)
+	em_inPgrid_y = interpn(em_x, em_y, em_z, em_field_3d[:,:,:,1], p_x, p_y, p_z)
+	em_inPgrid_z = interpn(em_x, em_y, em_z, em_field_3d[:,:,:,2], p_x, p_y, p_z)
+	em_inPgrid = np.stack((em_inPgrid_x,em_inPgrid_y,em_inPgrid_z))
+	print (em_inPgrid.shape)
+	em_inPgrid = np.moveaxis(em_inPgrid,0,-1)
 
-# They are both 236208L,3L so use matmul. 
-E_source = np.matmul(em_field[:,None,:], adiabatic_compressibility*grad_p[:,:,None]) [:,0]
-# then remove the last indice
+	outfile = "eminpgrid.npz"
+	np.savez(outfile,em_inPgrid=em_inPgrid)
+else: # read in the npz. 
+	newdata_filename = "eminpgrid.npz"
+	data = np.load(newdata_filename)
+	#print (data.keys())
+	em_inPgrid_x = data['em_inPgrid_x']
 
-# Put E source in 3D so that we can visualize it. 
-E_source_3d = E_source.reshape( grid_size[0]-1,grid_size[1]-1,grid_size[2]-1, order='F')
+print (em_inPgrid_x.shape)
 
 
-nanless = np.nan_to_num(E_source_3d)
-#print nanless 
-#print E_source_3d  # lots of nans... 
-E_source_3d = nanless
+# array = np.random.randint(0, 9, size=(100, 100, 100))
+# new_array = np.zeros((1000, 100, 100))
+# x = np.arange(0, 100, 1)
+# x_new = np.arange(0, 100, 0.1)
+# 
+# for i in x:
+#     for j in x:
+#         f = interp1d(x, array[:, i, j])
+#         new_array[:, i, j] = f(xnew)
+# 
+# To look at it, I'm going to have to plot a contour from a single slice. 
+# Check to see if it is a regular or irregular grid. 
+# 
+# Find the maximum slice. 
+# [resultx,resulty,resultz] = np.where(em_inPgrid_x == np.amax(em_inPgrid_x))
+# print (resultx,resulty,resultz)
+[presultx,presulty,presultz] = np.where(p_field_3d == np.amax(p_field_3d))
+print (presultx,presulty,presultz)
 
-E_source_producer = hz.visualizeArray(E_source_3d, em_x_axis2, em_y_axis2, em_z_axis2,unit_name="dP/dV",unit="W/m^3",name="E Source" )
+# This is the XY slice at the focal point. 
+# xy_em = em_inPgrid_x[:,:,presultz]
+# xy_p = p_field_3d[:,:,presultz]
+# 
+# print (xy_em[:,:,0].shape, len(p_x),len(p_y))
+# 
+# Now plot the slice contour. 
+# fig = plt.figure()
+# ax = fig.add_subplot(2,1,1)
+# CS = ax.contourf(p_x,p_y, xy_em[:,:,0], 10,cmap=plt.cm.bone)
+# cbar = fig.colorbar(CS)
+# ax.set_title('EM Dipole Field at Focus of Ultrasound')
+# ax = fig.add_subplot(2,1,2)
+# CS = ax.contourf(p_x,p_y, p_field_3d[:,:,0], 10,cmap=plt.cm.bone)
+# cbar = fig.colorbar(CS)
+# ax.set_title('Instantaneous Pressure at Focus')
+# plt.show()
 
-np.savez(outfile,E_source_3d=E_source_3d,x = em_x_axis2, y = em_y_axis2, z = em_z_axis2)
+print (len(p_z),p_field_3d.shape, p_field_3d[presultx,presulty,:].shape )
 
-print 'Calculation successful, E Source scalar field shape: ', E_source.shape# -*- coding: utf-8 -*-
+fig = plt.figure()
+ax = fig.add_subplot(3,1,1)
+plt.plot(p_z,np.real(p_field_3d[presultx,presulty,:][0]))
+plt.axvline(x=p_z[presultz],color='k', linestyle='--')
+# plt.plot(p_z,np.real(p_field_3d[presultx,presulty,:][0]),'--bo')
+ax.set_title('Axial P Field showing focus slice line')
+plt.grid()
+ax = fig.add_subplot(3,1,2)
+plt.plot(p_x,np.real(p_field_3d[:,presulty,presultz]))
+ax.set_title('Radial Cross-Section')
+plt.grid()
+
+ax = fig.add_subplot(3,1,3)
+plt.plot(p_x,np.real(em_inPgrid_x[:,presulty,presultz]))
+ax.set_title('EM Field at focus')
+plt.grid()
+
+plt.subplots_adjust(wspace=0.6)
+plt.show()
+
+
+# Now plot a cross section, through the middle in 1D 
+# fig = plt.figure()
+# ax = fig.add_subplot(2,1,1)
+# plt.plot(p_x,np.real(xy_em[:,presulty,0]),'--bo')
+# ax.set_title('E Field at Focus')
+# plt.grid()
+# ax = fig.add_subplot(2,1,2)
+# plt.plot(p_x,np.real(p_field_3d[:,presulty,0]),'--bo')
+# ax.set_title('Instantaneous Pressure at Focus')
+# plt.grid()
+# plt.show()
