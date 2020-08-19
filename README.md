@@ -8,7 +8,7 @@ The basic concept is to utilize the acoustoelectric effect, whereby an acoustic 
 ## Model Description
 For the feasibility test the following model will be used: 
 <p align="center">
-	<img src="images/experiment_setup.jpg" height="300">
+	<img src="images/computationpathway.png" height="300">
 </p>
 
 
