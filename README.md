@@ -7,7 +7,7 @@ This repository contains all files required to simulate the acoustoelectric effe
 </p>
 
 ## Results Description
-1 through 4 refer to the simulation results from each of the above listed Sim4Lifesimulations in the flowchart. 
+1 through 4 refer to the simulation results from each of the above listed simulations in the flowchart. 
 <p align="center">
 	<img src="images/computationpathway.png" height="300">
 </p>
