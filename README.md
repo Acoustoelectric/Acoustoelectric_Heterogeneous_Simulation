@@ -36,18 +36,18 @@ When the script has finished running, 'success!' will be written in the consol i
 Other files for verification and residual analysis: 
 - poisson verification.py. This file takes in the resultant phi, calculates the laplacian and compares it with the source term. 
 <p align="center">
-	<img src="images/laplacian_validation.png" height="100">
+	<img src="images/laplacian_validation.png" height="200">
 </p>
 - gradient verification. This file takes in the pressure field, the gradient calculated by numpy in python 3, and compares it against a central difference calculation of the gradient term, thereby verifying the gradient calculation. 
 <p align="center">
-	<img src="images/gradient_validation.png" height="100">
+	<img src="images/gradient_validation.png" height="200">
 </p>
 - acoustic_accuracy_test.py- this file was used to assess the accuracy of the acoustic simulation in comparison to the output of the analytic solution focused.m. The acoustic_accuracy_test_exporter can be run from within s4l once the acoustic simulation is complete, to export the results ready to plot. 
 <p align="center">
-	<img src="images/acoustic_validation.png" height="100">
+	<img src="images/acoustic_validation.png" height="200">
 </p>
 
-## Resulting field.  
+## Resultant acoustoelectric field 
 <p align="center">
 	<img src="images/xy_efield_result.png" height="200">
 	<img src="images/xz_efield_result.png" height="200">
