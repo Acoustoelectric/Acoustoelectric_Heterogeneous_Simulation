@@ -1,4 +1,7 @@
-# ATI - Acoustoelectric Simulation
+# Acoustoelectric Heterogeneous Simulation
+
+
+## Acoustoelectric Heterogeneous Simulation
 
 This repository contains all files required to simulate the acoustoelectric effect in a non-homogeneous medium. The simulation is made of 4 parts which solve the equation shown in the below flow chart. 
 
