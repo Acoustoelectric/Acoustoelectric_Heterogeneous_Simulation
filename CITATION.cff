@@ -14,6 +14,10 @@ authors:
     name-particle: Jean
     orcid: 'https://orcid.org/0000-0002-1963-7023'
     affiliation: Imperial College of London
+  - given-names: Haza
+    family-names: Montanaro
+  - given-names: Esra
+    family-names: Neufeld
 identifiers:
   - type: doi
     value: 10.6084/m9.figshare.26948188.v1
