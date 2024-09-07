@@ -1,0 +1,30 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Acoustoelectric heterogeneous simulation
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Jean
+    family-names: Rintoul
+    email: jean.rintoul@gmail.com
+    name-particle: Jean
+    orcid: 'https://orcid.org/0000-0002-1963-7023'
+    affiliation: Imperial College of London
+identifiers:
+  - type: doi
+    value: 10.6084/m9.figshare.26948188.v1
+    description: simulation github respository
+repository-code: >-
+  https://github.com/Acoustoelectric/Acoustoelectric_Heterogeneous_Simulation
+abstract: >-
+  Inhomogeneous solution for the acoustoelectric
+  interaction. 
+keywords:
+  - >-
+    acoustoelectric, finite element simulation, acoustics,
+    medical physics, biomedical imaging
+license: CC-BY-4.0
